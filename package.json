@@ -1,0 +1,19 @@
+{
+  "name": "@jongy/timeit",
+  "version": "0.0.1",
+  "description": "CPython's timeit in JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Jongy/timeit-js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Jongy/timeit-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jongy/timeit-js/issues"
+  },
+  "author": "Yonatan Goldschmidt"
+}
