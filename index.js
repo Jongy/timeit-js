@@ -1,32 +1,20 @@
-'use strict';
-module.exports = timeit;
+"use strict";
 
-const DEFAULT_ITERATIONS = 1e6;
-const MIN_ELAPSED = 0.5;
-
-function timeit(stmt, iters = null, setup = "") {
-    let iters_unset = false;
-    if (iters === null) {
-        iters = DEFAULT_ITERATIONS;
-        iters_unset = true;
-    }
-    iters /= 2;
-
-    const template = `
-            ${setup};
-            const t0 = process.hrtime();
-            for (let _i = 0; _i < _iters; _i++) {
+function timeit(init = "", setup = "", stmt = "", iterations = 1e6) {
+  const template = `
+            const { performance } = require("perf_hooks");
+            ${init};
+            for (let i = 0; i < n; i++) {
+              ${setup};
+            }
+            const start = performance.now();
+            for (let i = 0; i < n; i++) {
                 ${stmt};
             }
-            const res = process.hrtime(t0);
-            return res[0] + res[1] / 1e9
+            return performance.now() - start;
     `;
 
-    let elapsed = 0;
-    do {
-        iters *= 2;
-        elapsed = new Function("_iters", template)(iters);
-    } while (iters_unset && elapsed < MIN_ELAPSED);
-
-    return elapsed / iters;
+  return new Function("n", template)(iterations);
 }
+
+module.exports = timeit;
